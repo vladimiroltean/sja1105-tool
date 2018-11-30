@@ -739,6 +739,9 @@ static int sja1105_ptp_adjfine(struct ptp_clock_info *ptp, long scaled_ppm)
 	/* Take a +/- value and re-center it around 2^31. */
 	ptpclkrate += 0x80000000ull;
 
+	dev_err(&priv->spi_dev->dev, "ptpclkrate %08llx scaled_ppm %ld\n",
+	        ptpclkrate, scaled_ppm);
+
 	rc = sja1105_ptp_write_reg(priv, ptpclkrate_addr, &ptpclkrate, 4);
 
 	if (priv->configured_for_scheduling) {
